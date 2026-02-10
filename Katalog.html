@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+     <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>BookShelf - Книжный магазин</title>
+    <style>
+        .main {
+            display: flex;
+            justify-content: center; /* Центрирует дочерние элементы по горизонтали */
+            width: 100%;
+        }
+
+        .main > .wrapper {
+            width: 100%;
+            max-width: 1000px; /* Совпадает с шириной контейнера в header/footer */
+        }
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #FFF9F0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4B3621;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            margin-bottom: 40px;
+        }
+
+        .category-title {
+            font-size: 1.8em;
+            color: #4B3621;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #4B3621;
+            padding-bottom: 5px;
+        }
+
+        .books-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .book-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .book-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .book-image {
+            width: 100%;
+            height: 250px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .book-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .book-info {
+            padding: 15px;
+        }
+
+        .book-title {
+            font-size: 1.1em;
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .book-author {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .book-price {
+            font-size: 1.1em;
+            color: #4B3621;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .book-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .add-to-cart {
+            background-color: #4B3621;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+
+        .add-to-cart:hover {
+            background-color: #3A2A17;
+        }
+
+        .add-to-cart.added {
+            background-color: #8B4513;
+        }
+
+        .add-to-favorites {
+            background-color: transparent;
+            color: #A64B4B;
+            border: 2px solid #A64B4B;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-to-favorites:hover {
+            background-color: #A64B4B;
+            color: white;
+        }
+
+        .add-to-favorites.favorited {
+            background-color: #A64B4B;
+            color: white;
+        }
+
+        /* Стили для фильтров */
+        .filter-panel {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 280px;
+            height: 100%;
+            background-color: #FFF9F0;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .filter-panel.active {
+            right: 0;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4B3621;
+        }
+
+        .filter-title {
+            font-size: 1.5em;
+            color: #4B3621;
+            margin: 0;
+        }
+
+        .close-filter {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #4B3621;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group-title {
+            font-size: 1.2em;
+            color: #4B3621;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .filter-option input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            color: #333;
+        }
+
+        .apply-filters {
+            background-color: #4B3621;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .apply-filters:hover {
+            background-color: #3A2A17;
+        }
+
+        .reset-filters {
+            background-color: transparent;
+            color: #4B3621;
+            border: 1px solid #4B3621;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .reset-filters:hover {
+            background-color: #4B3621;
+            color: white;
+        }
+
+        /* Затемнение фона при открытом фильтре */
+        .filter-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .filter-overlay.active {
+            display: block;
+        }
+
+        /* Уведомления */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #543E27;
+            color: #F8F4ED;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(84, 62, 39, 0.3);
+            z-index: 2000;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            font-family: 'Arsenal', sans-serif;
+            border: 1px solid #43321F;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification i {
+            color: #D9C7A7;
+        }
+
+        /* Стили для модального окна */
+        .book-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .book-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .book-modal {
+            background-color: #FFF9F0;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .book-modal-overlay.active .book-modal {
+            transform: translateY(0);
+        }
+
+        .book-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 2em;
+            color: #4B3621;
+            cursor: pointer;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-modal-close:hover {
+            background-color: rgba(75, 54, 33, 0.1);
+        }
+
+        .book-modal-content {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .book-modal-content {
+                flex-direction: row;
+                gap: 30px;
+            }
+        }
+
+        .book-modal-image {
+            flex: 0 0 300px;
+            margin-bottom: 20px;
+        }
+
+        .book-modal-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .book-modal-info {
+            flex: 1;
+        }
+
+        .book-modal-title {
+            font-size: 2em;
+            color: #4B3621;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .book-modal-author {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .book-modal-price {
+            font-size: 1.8em;
+            color: #4B3621;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .book-modal-description {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 8px;
+            border-left: 4px solid #4B3621;
+        }
+
+        .book-modal-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .add-to-cart-modal {
+            background-color: #4B3621;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .add-to-cart-modal:hover {
+            background-color: #3A2A17;
+        }
+
+        .add-to-favorites-modal {
+            background-color: transparent;
+            color: #A64B4B;
+            border: 2px solid #A64B4B;
+            padding: 12px 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .add-to-favorites-modal:hover {
+            background-color: #A64B4B;
+            color: white;
+        }
+
+        .add-to-favorites-modal.favorited {
+            background-color: #A64B4B;
+            color: white;
+        }
+
+        @media (max-width: 767px) {
+            .book-modal {
+                width: 95%;
+                max-height: 85vh;
+            }
+            
+            .book-modal-content {
+                padding: 20px;
+            }
+            
+            .book-modal-title {
+                font-size: 1.6em;
+            }
+            
+            .book-modal-price {
+                font-size: 1.5em;
+            }
+            
+            .book-modal-image {
+                flex: 0 0 auto;
+            }
+            
+            .book-modal-image img {
+                height: 300px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="header_page">
+                <div class="logo">
+                    <img src="498813b038f4b6467c7a6b2e3abcd01dd18cbf85.png" alt="Логотип BookShelf">
+                </div>
+                <div class="inscription">
+                    <a href="index.html">Главная</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="choosen.html">Избранное</a>
+                    <a href="basket.html">Корзина</a>
+                </div>
+                <div class="logo">
+                    <img src="3eb7947bd732428f473cee7622d68b0f346158ff.png" alt="Иконка пользователя">
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Затемнение фона для фильтров -->
+    <div class="filter-overlay" id="filterOverlay"></div>
+    
+    <!-- Панель фильтров -->
+    <div class="filter-panel" id="filterPanel">
+        <div class="filter-header">
+            <h3 class="filter-title">Фильтры</h3>
+            <button class="close-filter" id="closeFilter">&times;</button>
+        </div>
+        
+        <div class="filter-group">
+            <h4 class="filter-group-title">Жанры</h4>
+            <div class="filter-option">
+                <input type="checkbox" id="genre-classic" data-genre="Классика">
+                <label for="genre-classic">Классика</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="genre-detective" data-genre="Детективы">
+                <label for="genre-detective">Детективы</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="genre-ya" data-genre="Young Adult">
+                <label for="genre-ya">Young Adult</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="genre-comics" data-genre="Комиксы и манга">
+                <label for="genre-comics">Комиксы и манга</label>
+            </div>
+            <div class="filter-option">
+                <input type="checkbox" id="genre-children" data-genre="Детская литература">
+                <label for="genre-children">Детская литература</label>
+            </div>
+        </div>
+        
+        <button class="apply-filters" id="applyFilters">Применить фильтры</button>
+        <button class="reset-filters" id="resetFilters">Сбросить фильтры</button>
+    </div>
+    
+    <div class="main">
+        <!-- Узкий сайдбар как в макете -->
+        <div class="sidebar">
+            <div class="sidebar-icon" title="Главная">
+                <a href="index.html" style="color: inherit; text-decoration: none;">🏠</a>
+                <span class="sidebar-tooltip">Главная</span>
+            </div>
+            <div class="sidebar-icon active" title="Каталог">
+                <a href="Katalog.html" style="color: inherit; text-decoration: none;">📚</a>
+                <span class="sidebar-tooltip">Каталог</span>
+            </div>
+            <div class="sidebar-icon" title="Фильтры" id="openFilter">
+                🔍
+                <span class="sidebar-tooltip">Фильтры</span>
+            </div>
+            <div class="sidebar-icon" title="Избранное">
+                <a href="choosen.html" style="color: inherit; text-decoration: none;">❤️</a>
+                <span class="sidebar-tooltip">Избранное</span>
+            </div>
+            <div class="sidebar-icon" title="Корзина">
+                <a href="basket.html" style="color: inherit; text-decoration: none;">🛒</a>
+                <span class="sidebar-tooltip">Корзина</span>
+            </div>
+            <div class="sidebar-vertical-text">
+                BOOKSHELF
+            </div>
+        </div>
+        
+        <div class = "wrapper">
+            <h1>Каталог книг</h1>
+            
+            <div class="category" data-genre="Классика">
+                <h2 class="category-title">Классика</h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-image"><img src = "6bacd045de0c47c830edb5d20a2fb1be8a6357f3.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Мастер и Маргарита</h3>
+                            <div class="book-author">Михаил Булгаков</div>
+                            <div class="book-price">890 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "classic1", "title": "Мастер и Маргарита", "author": "Михаил Булгаков", "price": 890, "image": "6bacd045de0c47c830edb5d20a2fb1be8a6357f3.png", "description": "Мистический роман о визите дьявола в Москву 1930-х годов и вечной любви. Одно из самых значительных произведений русской литературы XX века."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "classic1", "title": "Мастер и Маргарита", "author": "Михаил Булгаков", "price": 890, "image": "6bacd045de0c47c830edb5d20a2fb1be8a6357f3.png", "description": "Мистический роман о визите дьявола в Москву 1930-х годов и вечной любви."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "a35741e4c8c5c71e43cb5323f1c59f4941ac10d1.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Братья Карамазовы</h3>
+                            <div class="book-author">Федор Достоевский</div>
+                            <div class="book-price">750 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "classic2", "title": "Братья Карамазовы", "author": "Федор Достоевский", "price": 750, "image": "a35741e4c8c5c71e43cb5323f1c59f4941ac10d1.png", "description": "Философский роман о трёх братьях, их отце и глубоких нравственных вопросах. Последнее и самое масштабное произведение Достоевского."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "classic2", "title": "Братья Карамазовы", "author": "Федор Достоевский", "price": 750, "image": "a35741e4c8c5c71e43cb5323f1c59f4941ac10d1.png", "description": "Философский роман о трёх братьях, их отце и глубоких нравственных вопросах."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "721e536fdfb9de5ef8f9c38c3968822171aecf38.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Грозовой перевал</h3>
+                            <div class="book-author">Эмили Бронте</div>
+                            <div class="book-price">820 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "classic3", "title": "Грозовой перевал", "author": "Эмили Бронте", "price": 820, "image": "721e536fdfb9de5ef8f9c38c3968822171aecf38.png", "description": "Трагическая история любви Хитклифа и Кэтрин на фоне мрачного английского поместья. Единственный роман Эмили Бронте."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "classic3", "title": "Грозовой перевал", "author": "Эмили Бронте", "price": 820, "image": "721e536fdfb9de5ef8f9c38c3968822171aecf38.png", "description": "Трагическая история любви Хитклифа и Кэтрин на фоне мрачного английского поместья."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "6a6a6899dc17694d211890f2775f3ee389e2f5dc.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Жизнь на продажу</h3>
+                            <div class="book-author">Юкио Мисима</div>
+                            <div class="book-price">680 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "classic4", "title": "Жизнь на продажу", "author": "Юкио Мисима", "price": 680, "image": "6a6a6899dc17694d211890f2775f3ee389e2f5dc.png", "description": "История человека, который решает продать свою жизнь на аукционе. Произведение одного из самых известных японских писателей XX века."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "classic4", "title": "Жизнь на продажу", "author": "Юкио Мисима", "price": 680, "image": "6a6a6899dc17694d211890f2775f3ee389e2f5dc.png", "description": "История человека, который решает продать свою жизнь на аукционе."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-genre="Детективы">
+                <h2 class="category-title">Детективы</h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-image"><img src = "ca6d0d37af4b6619b4b6b982881eccddd1fec13f.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Убийство на выставке собак</h3>
+                            <div class="book-author">Питер Боланд</div>
+                            <div class="book-price">450 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "detective1", "title": "Убийство на выставке собак", "author": "Питер Боланд", "price": 450, "image": "ca6d0d37af4b6619b4b6b982881eccddd1fec13f.png", "description": "Детектив о загадочном убийстве на престижной выставке собак. Главный герой должен распутать клубок интриг и найти убийцу среди элиты собачьего мира."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "detective1", "title": "Убийство на выставке собак", "author": "Питер Боланд", "price": 450, "image": "ca6d0d37af4b6619b4b6b982881eccddd1fec13f.png", "description": "Детектив о загадочном убийстве на престижной выставке собак."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "28c086a62dabd2d2a52bce1495e116d24f240c36.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Один из нас лжёт</h3>
+                            <div class="book-author">Карен Макманус</div>
+                            <div class="book-price">520 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "detective2", "title": "Один из нас лжёт", "author": "Карен Макманус", "price": 520, "image": "28c086a62dabd2d2a52bce1495e116d24f240c36.png", "description": "Четверо подростков подозреваются в убийстве одноклассника, и один из них лжёт. Современный детектив в духе \"Клуба убийств по четвергам\"."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "detective2", "title": "Один из нас лжёт", "author": "Карен Макманус", "price": 520, "image": "28c086a62dabd2d2a52bce1495e116d24f240c36.png", "description": "Четверо подростков подозреваются в убийстве одноклассника, и один из них лжёт."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "e4d56c875fc5ba570798a662cc36e0bfd5248142.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Цветы смерти</h3>
+                            <div class="book-author">Ли Тонгон</div>
+                            <div class="book-price">480 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "detective3", "title": "Цветы смерти", "author": "Ли Тонгон", "price": 480, "image": "e4d56c875fc5ba570798a662cc36e0bfd5248142.png", "description": "Детективный триллер о серии загадочных убийств, связанных с экзотическими цветами. Действие происходит в современном Сеуле."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "detective3", "title": "Цветы смерти", "author": "Ли Тонгон", "price": 480, "image": "e4d56c875fc5ba570798a662cc36e0bfd5248142.png", "description": "Детективный триллер о серии загадочных убийств, связанных с экзотическими цветами."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "542e2900e88ebbd17019921a34e10d68a7ee498f.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Убийство Роджера Экройда</h3>
+                            <div class="book-author">Агата Кристи</div>
+                            <div class="book-price">560 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "detective4", "title": "Убийство Роджера Экройда", "author": "Агата Кристи", "price": 560, "image": "542e2900e88ebbd17019921a34e10d68a7ee498f.png", "description": "Классический детектив с участием Эркюля Пуаро о загадочном убийстве в сельской местности. Один из самых известных романов королевы детектива."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "detective4", "title": "Убийство Роджера Экройда", "author": "Агата Кристи", "price": 560, "image": "542e2900e88ebbd17019921a34e10d68a7ee498f.png", "description": "Классический детектив с участием Эркюля Пуаро о загадочном убийстве в сельской местности."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-genre="Young Adult">
+                <h2 class="category-title">Young Adult</h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-image"><img src = "3b71561922b78fc7298fc2a96b1c01dd566a5ac7.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Ониксовый шторм</h3>
+                            <div class="book-author">Ребекка Яррос</div>
+                            <div class="book-price">620 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "ya1", "title": "Ониксовый шторм", "author": "Ребекка Яррос", "price": 620, "image": "3b71561922b78fc7298fc2a96b1c01dd566a5ac7.png", "description": "Фэнтезийный роман о драконах, магии и эпических битвах. Первая книга популярной серии, покорившая сердца миллионов читателей по всему миру."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "ya1", "title": "Ониксовый шторм", "author": "Ребекка Яррос", "price": 620, "image": "3b71561922b78fc7298fc2a96b1c01dd566a5ac7.png", "description": "Фэнтезийный роман о драконах, магии и эпических битвах."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "5cc614f125286636c2f02ae18afaeddd29ec76a5.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Мара и Морок</h3>
+                            <div class="book-author">Лия Арден</div>
+                            <div class="book-price">590 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "ya2", "title": "Мара и Морок", "author": "Лия Арден", "price": 590, "image": "5cc614f125286636c2f02ae18afaeddd29ec76a5.png", "description": "История о девушке, которая попадает в мир древних богов и магии. Захватывающее фэнтези с элементами мифологии и романтики."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "ya2", "title": "Мара и Морок", "author": "Лия Арден", "price": 590, "image": "5cc614f125286636c2f02ae18afaeddd29ec76a5.png", "description": "История о девушке, которая попадает в мир древних богов и магии."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "516b128886354ff778ddfed80c57b00bfcc63fc4.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Виноваты звезды</h3>
+                            <div class="book-author">Джон Грин</div>
+                            <div class="book-price">550 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "ya3", "title": "Виноваты звезды", "author": "Джон Грин", "price": 550, "image": "516b128886354ff778ddfed80c57b00bfcc63fc4.png", "description": "История любви двух подростков, больных раком, которые находят друг друга в группе поддержки. Трогательный роман о жизни, любви и смерти."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "ya3", "title": "Виноваты звезды", "author": "Джон Грин", "price": 550, "image": "516b128886354ff778ddfed80c57b00bfcc63fc4.png", "description": "История любви двух подростков, больных раком, которые находят друг друга в группе поддержки."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "d13be8d80299e2d962395307b44ce8a9264932ec.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Гарри Поттер и философский камень</h3>
+                            <div class="book-author">Дж.К. Роулинг</div>
+                            <div class="book-price">780 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "ya4", "title": "Гарри Поттер и философский камень", "author": "Дж.К. Роулинг", "price": 780, "image": "d13be8d80299e2d962395307b44ce8a9264932ec.png", "description": "Мальчик-сирота Гарри Поттер узнаёт, что он волшебник и отправляется в школу чародейства и волшебства Хогвартс. Первая книга культовой серии."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "ya4", "title": "Гарри Поттер и философский камень", "author": "Дж.К. Роулинг", "price": 780, "image": "d13be8d80299e2d962395307b44ce8a9264932ec.png", "description": "Мальчик-сирота Гарри Поттер узнаёт, что он волшебник и отправляется в школу чародейства и волшебства Хогвартс."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-genre="Комиксы и манга">
+                <h2 class="category-title">Комиксы и манга</h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-image"><img src ="Group 1.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Волейбол</h3>
+                            <div class="book-author">Харуити Фурудатэ</div>
+                            <div class="book-price">420 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "comics1", "title": "Волейбол", "author": "Харуити Фурудатэ", "price": 420, "image": "Group 1.png", "description": "Манга о школьной волейбольной команде, стремящейся к национальному чемпионату. Динамичная история о спорте, дружбе и самосовершенствовании."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "comics1", "title": "Волейбол", "author": "Харуити Фурудатэ", "price": 420, "image": "Group 1.png", "description": "Манга о школьной волейбольной команде, стремящейся к национальному чемпионату."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "eeebe3d1ab68ee27d08f736dfd2f37ba730667a9.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Белая кровь</h3>
+                            <div class="book-author">Лим Лина</div>
+                            <div class="book-price">460 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "comics2", "title": "Белая кровь", "author": "Лим Лина", "price": 460, "image": "eeebe3d1ab68ee27d08f736dfd2f37ba730667a9.png", "description": "Манга о вампирах и тайнах древних кровных линий. Темное фэнтези с элементами романтики и мистики."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "comics2", "title": "Белая кровь", "author": "Лим Лина", "price": 460, "image": "eeebe3d1ab68ee27d08f736dfd2f37ba730667a9.png", "description": "Манга о вампирах и тайнах древних кровных линий."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "3.jfif"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Берсерк</h3>
+                            <div class="book-author">Кэнтаро Миура</div>
+                            <div class="book-price">510 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "comics3", "title": "Берсерк", "author": "Кэнтаро Миура", "price": 510, "image": "3.jfif", "description": "Мрачная история воина Гатса, сражающегося с демонами в средневековом мире. Культовая манга в жанре темного фэнтези."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "comics3", "title": "Берсерк", "author": "Кэнтаро Миура", "price": 510, "image": "3.jfif", "description": "Мрачная история воина Гатса, сражающегося с демонами в средневековом мире."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image"><img src = "d7b05c7c1ffa9eec677c2cba8e02b7fb6c26d4d1.png"></div>
+                        <div class="book-info">
+                            <h3 class="book-title">Чи</h3>
+                            <div class="book-author">Конами Каната</div>
+                            <div class="book-price">380 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "comics4", "title": "Чи", "author": "Конами Каната", "price": 380, "image": "d7b05c7c1ffa9eec677c2cba8e02b7fb6c26d4d1.png", "description": "Манга о маленьком котёнке по имени Чи и его приключениях. Милая и добрая история для всех любителей котиков."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "comics4", "title": "Чи", "author": "Конами Каната", "price": 380, "image": "d7b05c7c1ffa9eec677c2cba8e02b7fb6c26d4d1.png", "description": "Манга о маленьком котёнке по имени Чи и его приключениях."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-genre="Детская литература">
+                <h2 class="category-title">Детская литература</h2>
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-image">
+                            <img src="61c07d30cafcb563405dbde87be955b16382056a.jpg" alt="Ёжик в тумане">
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Ёжик в тумане</h3>
+                            <div class="book-author">Сергей Козлов</div>
+                            <div class="book-price">350 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "children1", "title": "Ёжик в тумане", "author": "Сергей Козлов", "price": 350, "image": "61c07d30cafcb563405dbde87be955b16382056a.jpg", "description": "Трогательная сказка о ёжике, который отправился в путешествие через туман, чтобы навестить своего друга медвежонка. Классика советской детской литературы."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "children1", "title": "Ёжик в тумане", "author": "Сергей Козлов", "price": 350, "image": "61c07d30cafcb563405dbde87be955b16382056a.jpg", "description": "Трогательная сказка о ёжике, который отправился в путешествие через туман, чтобы навестить своего друга медвежонка."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image">
+                            <img src="858b5b9e95b5220bbc40c14848117836f88cf5fc.jpg" alt="Царица гавская">
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Царица гавская</h3>
+                            <div class="book-author">Народная сказка</div>
+                            <div class="book-price">320 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "children2", "title": "Царица гавская", "author": "Народная сказка", "price": 320, "image": "858b5b9e95b5220bbc40c14848117836f88cf5fc.jpg", "description": "Весёлая сказка о царице, которая очень любила гавкать и веселиться. Забавная история для самых маленьких читателей."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "children2", "title": "Царица гавская", "author": "Народная сказка", "price": 320, "image": "858b5b9e95b5220bbc40c14848117836f88cf5fc.jpg", "description": "Весёлая сказка о царице, которая очень любила гавкать и веселиться."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image">
+                            <img src="4709bf2df63a4b23be142eb71751d6550e620938.jpg" alt="Мои двенадцать месяцев">
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Мои двенадцать месяцев</h3>
+                            <div class="book-author">Самуил Маршак</div>
+                            <div class="book-price">290 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "children3", "title": "Мои двенадцать месяцев", "author": "Самуил Маршак", "price": 290, "image": "4709bf2df63a4b23be142eb71751d6550e620938.jpg", "description": "Сказка о девочке, которую злая мачеха отправила зимой в лес за подснежниками. Классическая зимняя сказка в стихах."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "children3", "title": "Мои двенадцать месяцев", "author": "Самуил Маршак", "price": 290, "image": "4709bf2df63a4b23be142eb71751d6550e620938.jpg", "description": "Сказка о девочке, которую злая мачеха отправила зимой в лес за подснежниками."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-image">
+                            <img src="d6446bda6e3e4e7d2d2afa42e5d5fa88e6c155b5.jpg" alt="Тук-тук!">
+                        </div>
+                        <div class="book-info">
+                            <h3 class="book-title">Тук-тук!</h3>
+                            <div class="book-author">Корней Чуковский</div>
+                            <div class="book-price">310 ₽</div>
+                            <div class="book-actions">
+                                <button class="add-to-cart" data-book='{"id": "children4", "title": "Тук-тук!", "author": "Корней Чуковский", "price": 310, "image": "d6446bda6e3e4e7d2d2afa42e5d5fa88e6c155b5.jpg", "description": "Весёлые стихи и загадки для самых маленьких читателей. Яркие иллюстрации и простые рифмы помогут развить речь и воображение ребенка."}'>В корзину</button>
+                                <button class="add-to-favorites" data-book='{"id": "children4", "title": "Тук-тук!", "author": "Корней Чуковский", "price": 310, "image": "d6446bda6e3e4e7d2d2afa42e5d5fa88e6c155b5.jpg", "description": "Весёлые стихи и загадки для самых маленьких читателей."}'>
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для деталей книги -->
+    <div class="book-modal-overlay" id="bookModalOverlay">
+        <div class="book-modal" id="bookModal">
+            <button class="book-modal-close" id="bookModalClose">&times;</button>
+            <div class="book-modal-content">
+                <div class="book-modal-image" id="bookModalImage">
+                    <img src="" alt="Обложка книги">
+                </div>
+                <div class="book-modal-info">
+                    <h2 class="book-modal-title" id="bookModalTitle"></h2>
+                    <div class="book-modal-author" id="bookModalAuthor"></div>
+                    <div class="book-modal-price" id="bookModalPrice"></div>
+                    <div class="book-modal-description" id="bookModalDescription"></div>
+                    
+                    <div class="book-modal-actions">
+                        <button class="add-to-cart-modal" id="addToCartModal">В корзину</button>
+                        <button class="add-to-favorites-modal" id="addToFavoritesModal">
+                            <i class="fas fa-heart"></i> В избранное
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="wrapper">
+            <div class="footer_page">
+                <div class="inscription1">
+                    <p>𝐸𝓋𝑒𝓇𝓎 𝒷𝑜𝑜𝓀 𝒻𝒾𝓃𝒹𝓈 𝒾𝓉𝓈 𝓈𝒽𝑒𝓁𝒻 𝒽𝑒𝓇𝑒.</p>
+                </div>
+                <div class="links">
+                    <a class="big_words" href="Katalog.html">Каталог</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="delivery.html">Доставка</a>
+                    <div class="other">© 2026 Библиотека. Все права защищены</div>
+                </div>
+                <div class="contacts">
+                    <a href="Contacts.html">Контакты</a>
+                    <div class="icons">
+                        <img src="1c0ffca3f9a49ea472972b706c675462d8a2f727.png" alt="Соцсеть 1">
+                        <img src="cff2f600ccb452e853b86f7b3537f97ca4519747.png" alt="Соцсеть 2">
+                        <img src="95f772b910eb8c8c4d1690e8cf834b3c86f8c6dc.png" alt="Соцсеть 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Класс для работы с избранным
+        class Favorites {
+            constructor() {
+                this.items = this.loadFavorites() || [];
+            }
+            
+            loadFavorites() {
+                const favoritesData = localStorage.getItem('bookFavorites');
+                return favoritesData ? JSON.parse(favoritesData) : null;
+            }
+            
+            saveFavorites() {
+                localStorage.setItem('bookFavorites', JSON.stringify(this.items));
+            }
+            
+            addItem(book) {
+                // Проверяем, есть ли уже такая книга в избранном
+                const existingItem = this.items.find(item => item.id === book.id);
+                
+                if (!existingItem) {
+                    this.items.push(book);
+                    this.saveFavorites();
+                    return book;
+                }
+                return null;
+            }
+            
+            removeItem(bookId) {
+                this.items = this.items.filter(item => item.id !== bookId);
+                this.saveFavorites();
+            }
+            
+            isInFavorites(bookId) {
+                return this.items.some(item => item.id === bookId);
+            }
+            
+            getItems() {
+                return this.items;
+            }
+            
+            getCount() {
+                return this.items.length;
+            }
+            
+            updateFavoritesIndicator() {
+                const count = this.getCount();
+                const favoritesIndicator = document.getElementById('favoritesIndicator');
+                
+                if (favoritesIndicator) {
+                    favoritesIndicator.textContent = count > 0 ? `❤️ (${count})` : '❤️';
+                }
+            }
+        }
+
+        // Класс для работы с корзиной
+        class Cart {
+            constructor() {
+                this.items = this.loadCart() || [];
+            }
+            
+            loadCart() {
+                const cartData = localStorage.getItem('bookCart');
+                return cartData ? JSON.parse(cartData) : null;
+            }
+            
+            saveCart() {
+                localStorage.setItem('bookCart', JSON.stringify(this.items));
+            }
+            
+            addItem(book) {
+                // Проверяем, есть ли уже такая книга в корзине
+                const existingItem = this.items.find(item => item.id === book.id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    book.quantity = 1;
+                    this.items.push(book);
+                }
+                
+                this.saveCart();
+                this.updateCartIndicator();
+                return book;
+            }
+            
+            removeItem(bookId) {
+                this.items = this.items.filter(item => item.id !== bookId);
+                this.saveCart();
+                this.updateCartIndicator();
+            }
+            
+            updateQuantity(bookId, quantity) {
+                const item = this.items.find(item => item.id === bookId);
+                if (item) {
+                    item.quantity = quantity;
+                    this.saveCart();
+                }
+            }
+            
+            getTotalItems() {
+                return this.items.reduce((total, item) => total + item.quantity, 0);
+            }
+            
+            getTotalPrice() {
+                return this.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+            }
+            
+            clearCart() {
+                this.items = [];
+                this.saveCart();
+                this.updateCartIndicator();
+            }
+            
+            updateCartIndicator() {
+                const totalItems = this.getTotalItems();
+                const cartIndicator = document.getElementById('cartIndicator');
+                
+                if (cartIndicator) {
+                    cartIndicator.textContent = totalItems > 0 ? `🛒 (${totalItems})` : '🛒';
+                }
+            }
+            
+            getItems() {
+                return this.items;
+            }
+        }
+
+        // Инициализация избранного и корзины
+        const favorites = new Favorites();
+        const cart = new Cart();
+
+        // ========================
+        // КОД ДЛЯ МОДАЛЬНОГО ОКНА
+        // ========================
+
+        // Переменные для модального окна
+        const bookModalOverlay = document.getElementById('bookModalOverlay');
+        const bookModal = document.getElementById('bookModal');
+        const bookModalClose = document.getElementById('bookModalClose');
+        const bookModalImage = document.getElementById('bookModalImage').querySelector('img');
+        const bookModalTitle = document.getElementById('bookModalTitle');
+        const bookModalAuthor = document.getElementById('bookModalAuthor');
+        const bookModalPrice = document.getElementById('bookModalPrice');
+        const bookModalDescription = document.getElementById('bookModalDescription');
+        const addToCartModalBtn = document.getElementById('addToCartModal');
+        const addToFavoritesModalBtn = document.getElementById('addToFavoritesModal');
+
+        let currentBookData = null;
+
+        // Функция открытия модального окна
+        function openBookModal(bookData) {
+            currentBookData = bookData;
+            
+            // Заполняем модальное окно данными
+            bookModalImage.src = bookData.image;
+            bookModalImage.alt = bookData.title;
+            bookModalTitle.textContent = bookData.title;
+            bookModalAuthor.textContent = bookData.author;
+            bookModalPrice.textContent = `${bookData.price} ₽`;
+            bookModalDescription.textContent = bookData.description || 'Описание временно отсутствует';
+            
+            // Обновляем состояние кнопки избранного
+            const isFavorited = favorites.isInFavorites(bookData.id);
+            if (isFavorited) {
+                addToFavoritesModalBtn.classList.add('favorited');
+                addToFavoritesModalBtn.innerHTML = '<i class="fas fa-heart"></i> В избранном';
+            } else {
+                addToFavoritesModalBtn.classList.remove('favorited');
+                addToFavoritesModalBtn.innerHTML = '<i class="fas fa-heart"></i> В избранное';
+            }
+            
+            // Показываем модальное окно
+            bookModalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Блокируем прокрутку страницы
+        }
+
+        // Функция закрытия модального окна
+        function closeBookModal() {
+            bookModalOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Возвращаем прокрутку страницы
+            currentBookData = null;
+        }
+
+        // Обработчик закрытия модального окна
+        bookModalClose.addEventListener('click', closeBookModal);
+        bookModalOverlay.addEventListener('click', (e) => {
+            if (e.target === bookModalOverlay) {
+                closeBookModal();
+            }
+        });
+
+        // Обработчик кнопки "В корзину" в модальном окне
+        addToCartModalBtn.addEventListener('click', () => {
+            if (currentBookData) {
+                cart.addItem(currentBookData);
+                
+                // Показываем уведомление
+                showNotification(`Книга "${currentBookData.title}" добавлена в корзину`, 'success');
+                
+                // Обновляем индикатор корзины
+                cart.updateCartIndicator();
+                
+                // Визуальный фидбек на кнопке
+                const originalText = addToCartModalBtn.textContent;
+                addToCartModalBtn.textContent = 'Добавлено!';
+                addToCartModalBtn.style.backgroundColor = '#8B4513';
+                
+                setTimeout(() => {
+                    addToCartModalBtn.textContent = originalText;
+                    addToCartModalBtn.style.backgroundColor = '';
+                }, 1500);
+            }
+        });
+
+        // Обработчик кнопки "В избранное" в модальном окне
+        addToFavoritesModalBtn.addEventListener('click', () => {
+            if (currentBookData) {
+                const isFavorited = favorites.isInFavorites(currentBookData.id);
+                
+                if (isFavorited) {
+                    // Удаляем из избранного
+                    favorites.removeItem(currentBookData.id);
+                    addToFavoritesModalBtn.classList.remove('favorited');
+                    addToFavoritesModalBtn.innerHTML = '<i class="fas fa-heart"></i> В избранное';
+                    showNotification(`Книга "${currentBookData.title}" удалена из избранного`, 'info');
+                } else {
+                    // Добавляем в избранное
+                    const addedBook = favorites.addItem(currentBookData);
+                    if (addedBook) {
+                        addToFavoritesModalBtn.classList.add('favorited');
+                        addToFavoritesModalBtn.innerHTML = '<i class="fas fa-heart"></i> В избранном';
+                        showNotification(`Книга "${currentBookData.title}" добавлена в избранное`, 'success');
+                    }
+                }
+                
+                // Обновляем индикатор избранного и кнопки на странице
+                favorites.updateFavoritesIndicator();
+                updateFavoritesButtons();
+            }
+        });
+
+        // Добавляем обработчики клика на карточки книг
+        document.querySelectorAll('.book-card').forEach(card => {
+            card.style.cursor = 'pointer';
+            
+            card.addEventListener('click', (e) => {
+                // Проверяем, не был ли клик по кнопке (чтобы не открывать модалку при клике на кнопку)
+                if (!e.target.closest('.add-to-cart') && !e.target.closest('.add-to-favorites')) {
+                    // Находим ближайшую кнопку с данными книги
+                    const addToCartBtn = card.querySelector('.add-to-cart');
+                    if (addToCartBtn) {
+                        const bookData = JSON.parse(addToCartBtn.getAttribute('data-book'));
+                        openBookModal(bookData);
+                    }
+                }
+            });
+        });
+
+        // Закрытие модального окна по клавише Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && bookModalOverlay.classList.contains('active')) {
+                closeBookModal();
+            }
+        });
+
+        // ========================
+        // КОНЕЦ КОДА ДЛЯ МОДАЛЬНОГО ОКНА
+        // ========================
+
+        // Функция для показа уведомления
+        function showNotification(message, type = 'success') {
+            // Создаем элемент уведомления
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            
+            let icon = 'fas fa-check-circle';
+            if (type === 'error') icon = 'fas fa-exclamation-circle';
+            if (type === 'info') icon = 'fas fa-info-circle';
+            
+            notification.innerHTML = `
+                <i class="${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Анимация появления
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Автоматическое скрытие через 3 секунды
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Функция для обновления состояния кнопок избранного
+        function updateFavoritesButtons() {
+            document.querySelectorAll('.add-to-favorites').forEach(button => {
+                const bookData = JSON.parse(button.getAttribute('data-book'));
+                const isFavorited = favorites.isInFavorites(bookData.id);
+                
+                if (isFavorited) {
+                    button.classList.add('favorited');
+                    button.innerHTML = '<i class="fas fa-heart"></i>';
+                } else {
+                    button.classList.remove('favorited');
+                    button.innerHTML = '<i class="fas fa-heart"></i>';
+                }
+            });
+        }
+
+        // Элементы фильтрации
+        const filterPanel = document.getElementById('filterPanel');
+        const filterOverlay = document.getElementById('filterOverlay');
+        const openFilterBtn = document.getElementById('openFilter');
+        const closeFilterBtn = document.getElementById('closeFilter');
+        const applyFiltersBtn = document.getElementById('applyFilters');
+        const resetFiltersBtn = document.getElementById('resetFilters');
+        
+        // Все чекбоксы жанров
+        const genreCheckboxes = document.querySelectorAll('input[data-genre]');
+        
+        // Все категории книг
+        const categories = document.querySelectorAll('.category');
+        
+        // Открытие панели фильтров
+        openFilterBtn.addEventListener('click', () => {
+            filterPanel.classList.add('active');
+            filterOverlay.classList.add('active');
+        });
+        
+        // Закрытие панели фильтров
+        function closeFilterPanel() {
+            filterPanel.classList.remove('active');
+            filterOverlay.classList.remove('active');
+        }
+        
+        closeFilterBtn.addEventListener('click', closeFilterPanel);
+        filterOverlay.addEventListener('click', closeFilterPanel);
+        
+        // Применение фильтров
+        applyFiltersBtn.addEventListener('click', () => {
+            // Получаем выбранные жанры
+            const selectedGenres = [];
+            genreCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedGenres.push(checkbox.getAttribute('data-genre'));
+                }
+            });
+            
+            // Если ничего не выбрано, показываем все
+            if (selectedGenres.length === 0) {
+                categories.forEach(category => {
+                    category.style.display = 'block';
+                });
+            } else {
+                // Показываем только выбранные категории
+                categories.forEach(category => {
+                    const categoryGenre = category.getAttribute('data-genre');
+                    if (selectedGenres.includes(categoryGenre)) {
+                        category.style.display = 'block';
+                    } else {
+                        category.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Закрываем панель фильтров
+            closeFilterPanel();
+        });
+        
+        // Сброс фильтров
+        resetFiltersBtn.addEventListener('click', () => {
+            // Сбрасываем все чекбоксы
+            genreCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            
+            // Показываем все категории
+            categories.forEach(category => {
+                category.style.display = 'block';
+            });
+            
+            // Закрываем панель фильтров
+            closeFilterPanel();
+        });
+        
+        // Добавляем обработчики для кнопок "В корзину"
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const bookData = JSON.parse(this.getAttribute('data-book'));
+                const addedBook = cart.addItem(bookData);
+                
+                // Показываем уведомление
+                this.textContent = 'Добавлено!';
+                this.classList.add('added');
+                
+                setTimeout(() => {
+                    this.textContent = 'В корзину';
+                    this.classList.remove('added');
+                }, 1500);
+                
+                // Показываем уведомление
+                showNotification(`Книга "${bookData.title}" добавлена в корзину`, 'success');
+            });
+        });
+        
+        // Добавляем обработчики для кнопок "В избранное"
+        document.querySelectorAll('.add-to-favorites').forEach(button => {
+            button.addEventListener('click', function() {
+                const bookData = JSON.parse(this.getAttribute('data-book'));
+                const isFavorited = favorites.isInFavorites(bookData.id);
+                
+                if (isFavorited) {
+                    // Удаляем из избранного
+                    favorites.removeItem(bookData.id);
+                    this.classList.remove('favorited');
+                    showNotification(`Книга "${bookData.title}" удалена из избранного`, 'info');
+                } else {
+                    // Добавляем в избранное
+                    const addedBook = favorites.addItem(bookData);
+                    if (addedBook) {
+                        this.classList.add('favorited');
+                        showNotification(`Книга "${bookData.title}" добавлена в избранное`, 'success');
+                    }
+                }
+                
+                // Обновляем индикатор избранного
+                favorites.updateFavoritesIndicator();
+            });
+        });
+        
+        // Обновляем индикаторы при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            cart.updateCartIndicator();
+            favorites.updateFavoritesIndicator();
+            updateFavoritesButtons();
+            
+            // Добавляем индикаторы в сайдбар
+            const favoritesIcon = document.querySelector('.sidebar-icon[title="Избранное"] a');
+            const cartIcon = document.querySelector('.sidebar-icon[title="Корзина"] a');
+            
+            if (favoritesIcon) {
+                const favoritesCount = favorites.getCount();
+                favoritesIcon.innerHTML = favoritesCount > 0 ? `❤️ (${favoritesCount})` : '❤️';
+                favoritesIcon.id = 'favoritesIndicator';
+            }
+            
+            if (cartIcon) {
+                const cartCount = cart.getTotalItems();
+                cartIcon.innerHTML = cartCount > 0 ? `🛒 (${cartCount})` : '🛒';
+                cartIcon.id = 'cartIndicator';
+            }
+        });
+    </script>
+</body>
+</html>

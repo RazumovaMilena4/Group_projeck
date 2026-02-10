@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+          <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Избранное | BookShelf</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arsenal', sans-serif;
+            background-color: #F8F4ED;
+            color: #43321F;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #543E27;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(84, 62, 39, 0.2);
+        }
+
+        .header_page {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+        }
+
+        .logo-text {
+            color: #F8F4ED;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .inscription {
+            display: flex;
+            gap: 30px;
+        }
+
+        .inscription a {
+            color: #F8F4ED;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .inscription a:hover {
+            color: #D9C7A7;
+        }
+
+        .inscription a.active {
+            color: #D9C7A7;
+        }
+
+        .inscription a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #D9C7A7;
+        }
+
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 70px;
+            background-color: #543E27;
+            border-radius: 0 15px 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 0;
+            box-shadow: 3px 0 10px rgba(84, 62, 39, 0.15);
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            font-size: 24px;
+            color: #F8F4ED;
+            transition: all 0.3s;
+        }
+
+        .sidebar-icon:hover {
+            background-color: #43321F;
+            transform: translateY(-3px);
+        }
+
+        .sidebar-icon.active {
+            background-color: #D9C7A7;
+            color: #543E27;
+        }
+
+        .sidebar-tooltip {
+            position: absolute;
+            left: 60px;
+            background-color: #543E27;
+            color: #F8F4ED;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s;
+            z-index: 100;
+            border: 1px solid #43321F;
+        }
+
+        .sidebar-icon:hover .sidebar-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar-vertical-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            color: #D9C7A7;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 3px;
+            margin-top: 40px;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 0 40px;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            color: #543E27;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .page-header p {
+            font-size: 18px;
+            color: #8B7355;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Favorites Grid */
+        .favorites-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .favorite-item {
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(67, 50, 31, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border: 1px solid #E8DFD0;
+        }
+
+        .favorite-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(67, 50, 31, 0.15);
+        }
+
+        .book-cover {
+            height: 200px;
+            background: linear-gradient(135deg, #543E27 0%, #8B7355 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-placeholder {
+            font-size: 60px;
+            color: #D9C7A7;
+        }
+
+        .book-details {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .book-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #543E27;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .book-author {
+            font-size: 16px;
+            color: #8B7355;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .book-description {
+            font-size: 14px;
+            color: #43321F;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .book-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #543E27;
+            margin-bottom: 15px;
+        }
+
+        .book-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Arsenal', sans-serif;
+        }
+
+        .btn-primary {
+            background-color: #8B7355;
+            color: #F8F4ED;
+            flex-grow: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: #543E27;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #A64B4B;
+            border: 2px solid #A64B4B;
+        }
+
+        .btn-secondary:hover {
+            background-color: #A64B4B;
+            color: #F8F4ED;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            background-color: #FFFFFF;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(67, 50, 31, 0.1);
+            margin-bottom: 60px;
+            border: 1px solid #E8DFD0;
+        }
+
+        .empty-icon {
+            font-size: 80px;
+            color: #E8DFD0;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h2 {
+            font-size: 32px;
+            color: #543E27;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .empty-state p {
+            font-size: 18px;
+            color: #8B7355;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        .btn-browse {
+            background-color: #543E27;
+            color: #F8F4ED;
+            padding: 15px 30px;
+            font-size: 17px;
+        }
+
+        .btn-browse:hover {
+            background-color: #43321F;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            background: linear-gradient(135deg, #543E27 0%, #43321F 100%);
+            color: #F8F4ED;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 6px 15px rgba(67, 50, 31, 0.15);
+            border: 1px solid #8B7355;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            font-size: 120px;
+            color: rgba(217, 199, 167, 0.2);
+            top: -20px;
+            left: 20px;
+            font-family: Georgia, serif;
+        }
+
+        .quote-text {
+            font-size: 22px;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .quote-author {
+            font-size: 16px;
+            color: #D9C7A7;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #543E27;
+            color: #F8F4ED;
+            padding: 40px 0 30px;
+            margin-top: auto;
+            border-top: 3px solid #43321F;
+        }
+
+        .footer_page {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .inscription1 p {
+            font-size: 20px;
+            font-style: italic;
+            color: #D9C7A7;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .links a {
+            color: #F8F4ED;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .links a:hover {
+            color: #D9C7A7;
+        }
+
+        .big_words {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .other {
+            margin-top: 20px;
+            color: #D9C7A7;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .icons i {
+            font-size: 28px;
+            color: #F8F4ED;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .icons i:hover {
+            color: #D9C7A7;
+        }
+
+        /* Book Cover Colors */
+        .book-cover-1 { background: linear-gradient(135deg, #543E27 0%, #8B7355 100%); }
+        .book-cover-2 { background: linear-gradient(135deg, #43321F 0%, #6B5B4D 100%); }
+        .book-cover-3 { background: linear-gradient(135deg, #8B7355 0%, #B8A28A 100%); }
+        .book-cover-4 { background: linear-gradient(135deg, #6B5B4D 0%, #A6937C 100%); }
+        .book-cover-5 { background: linear-gradient(135deg, #543E27 0%, #43321F 100%); }
+        .book-cover-6 { background: linear-gradient(135deg, #8B7355 0%, #6B5B4D 100%); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .favorites-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header_page {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .inscription {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: center;
+                padding: 15px;
+                border-radius: 0;
+                margin-bottom: 20px;
+                position: static;
+            }
+
+            .sidebar-icon {
+                margin: 0 10px;
+            }
+
+            .sidebar-vertical-text {
+                display: none;
+            }
+
+            .content {
+                padding: 0 20px;
+            }
+
+            .page-header h1 {
+                font-size: 36px;
+            }
+
+            .favorites-container {
+                grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+            }
+
+            .footer_page {
+                flex-direction: column;
+                text-align: center;
+                gap: 25px;
+            }
+
+            .quote-section {
+                padding: 30px 20px;
+            }
+
+            .quote-text {
+                font-size: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .inscription {
+                gap: 15px;
+            }
+
+            .inscription a {
+                font-size: 16px;
+            }
+
+            .book-actions {
+                flex-direction: column;
+            }
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+            .quote-section {
+                padding: 25px 15px;
+            }
+
+            .quote-text {
+                font-size: 18px;
+            }
+
+            .empty-icon {
+                font-size: 60px;
+            }
+
+            .empty-state h2 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="wrapper">
+            <div class="header_page">
+                <div class="logo">
+                    <div class="logo-text">BookShelf</div>
+                </div>
+                <div class="inscription">
+                    <a href="index.html">Главная</a>
+                    <a href="Katalog.html">Каталог</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="choosen.html" class="active">Избранное</a>
+                    <a href="basket.html">Корзина</a>
+                </div>
+                <div class="logo">
+                    <i class="fas fa-user" style="color: #F8F4ED; font-size: 28px;"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-icon" title="Главная">
+                <a href="index.html" style="color: inherit; text-decoration: none;">🏠</a>
+                <span class="sidebar-tooltip">Главная</span>
+            </div>
+            <div class="sidebar-icon active" title="Каталог">
+                <a href="Katalog.html" style="color: inherit; text-decoration: none;">📚</a>
+                <span class="sidebar-tooltip">Каталог</span>
+            </div>
+            <div class="sidebar-icon" title="Избранное">
+                <a href="choosen.html" style="color: inherit; text-decoration: none;">❤️</a>
+                <span class="sidebar-tooltip">Избранное</span>
+            </div>
+            <div class="sidebar-icon" title="Корзина">
+                <a href="basket.html" style="color: inherit; text-decoration: none;">🛒</a>
+                <span class="sidebar-tooltip">Корзина</span>
+            </div>
+            <div class="sidebar-vertical-text">
+                BOOKSHELF
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1><i class="fas fa-heart" style="color: #A64B4B; margin-right: 15px;"></i> Избранное</h1>
+                <p>Книги, которые вы добавили в список желаний. Вы можете купить их сразу или сохранить для будущих покупок.</p>
+            </div>
+
+            <!-- Quote Section -->
+            <div class="quote-section">
+                <div class="quote-text">
+                    "Любовь это... понимать, что жизнь не была бы такой прекрасной без книг"
+                </div>
+                <div class="quote-author">— BookShelf</div>
+            </div>
+
+            <!-- Favorites Grid -->
+            <div class="favorites-container" id="favorites-container">
+                <!-- Книги будут добавляться динамически -->
+            </div>
+
+            <!-- Empty State (скрыто по умолчанию) -->
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-heart-broken"></i>
+                </div>
+                <h2>Ваш список избранного пуст</h2>
+                <p>Добавляйте книги, которые вам понравились, чтобы не потерять их и вернуться к ним позже.</p>
+                <button class="btn btn-browse" id="browse-btn">
+                    <i class="fas fa-book"></i> Перейти в каталог
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="wrapper">
+            <div class="footer_page">
+                <div class="inscription1">
+                    <p>𝐸𝓋𝑒𝓇𝓎 𝒷𝑜𝑜𝓀 𝒻𝒾𝓃𝒹𝓈 𝒾𝓉𝓈 𝓈𝒽𝑒𝓁𝒻 𝒽𝑒𝓇𝑒.</p>
+                </div>
+                <div class="links">
+                    <a class="big_words" href="Katalog.html">Каталог</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="delivery.html">Доставка</a>
+                    <div class="other">© 2026 BookShelf. Все права защищены</div>
+                </div>
+                <div class="contacts">
+                    <a href="Contacts.html">Контакты</a>
+                    <div class="icons">
+                        <i class="fab fa-vk"></i>
+                        <i class="fab fa-telegram"></i>
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   <!-- Вставьте этот скрипт в конец файла choosen.html, заменяя существующий JavaScript код -->
+
+<script>
+    // Класс для работы с избранным
+    class Favorites {
+        constructor() {
+            this.items = this.loadFavorites() || [];
+        }
+        
+        loadFavorites() {
+            const favoritesData = localStorage.getItem('bookFavorites');
+            return favoritesData ? JSON.parse(favoritesData) : null;
+        }
+        
+        saveFavorites() {
+            localStorage.setItem('bookFavorites', JSON.stringify(this.items));
+        }
+        
+        addItem(book) {
+            const existingItem = this.items.find(item => item.id === book.id);
+            
+            if (!existingItem) {
+                this.items.push(book);
+                this.saveFavorites();
+                return book;
+            }
+            return null;
+        }
+        
+        removeItem(bookId) {
+            this.items = this.items.filter(item => item.id !== bookId);
+            this.saveFavorites();
+        }
+        
+        isInFavorites(bookId) {
+            return this.items.some(item => item.id === bookId);
+        }
+        
+        getItems() {
+            return this.items;
+        }
+        
+        getCount() {
+            return this.items.length;
+        }
+    }
+
+    // Класс для работы с корзиной
+    class Cart {
+        constructor() {
+            this.items = this.loadCart() || [];
+        }
+        
+        loadCart() {
+            const cartData = localStorage.getItem('bookCart');
+            return cartData ? JSON.parse(cartData) : null;
+        }
+        
+        saveCart() {
+            localStorage.setItem('bookCart', JSON.stringify(this.items));
+        }
+        
+        addItem(book) {
+            const existingItem = this.items.find(item => item.id === book.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                book.quantity = 1;
+                this.items.push(book);
+            }
+            
+            this.saveCart();
+            return book;
+        }
+    }
+
+    // Инициализация
+    const favorites = new Favorites();
+    const cart = new Cart();
+
+    // Элементы DOM
+    const favoritesContainer = document.getElementById('favorites-container');
+    const emptyState = document.getElementById('empty-state');
+    const browseBtn = document.getElementById('browse-btn');
+
+    // Функция для отображения избранных книг
+    function renderFavorites() {
+        favoritesContainer.innerHTML = '';
+        
+        const favoritesData = favorites.getItems();
+        
+        if (favoritesData.length === 0) {
+            emptyState.style.display = 'block';
+            favoritesContainer.style.display = 'none';
+        } else {
+            emptyState.style.display = 'none';
+            favoritesContainer.style.display = 'grid';
+            
+            // Массив цветов для обложек
+            const coverClasses = ['book-cover-1', 'book-cover-2', 'book-cover-3', 'book-cover-4', 'book-cover-5', 'book-cover-6'];
+            
+            favoritesData.forEach((book, index) => {
+                const coverClass = coverClasses[index % coverClasses.length];
+                
+                const bookElement = document.createElement('div');
+                bookElement.className = 'favorite-item';
+                bookElement.innerHTML = `
+                    <div class="book-cover ${coverClass}">
+                        <div class="book-placeholder">
+                            <i class="fas fa-book"></i>
+                        </div>
+                    </div>
+                    <div class="book-details">
+                        <h3 class="book-title">${book.title}</h3>
+                        <p class="book-author">${book.author}</p>
+                        <p class="book-description">${book.description || 'Захватывающая книга, которую вы добавили в избранное.'}</p>
+                        <div class="book-price">${book.price} ₽</div>
+                        <div class="book-actions">
+                            <button class="btn btn-primary" onclick="addToCartFromFavorites('${book.id}')">
+                                <i class="fas fa-cart-plus"></i> В корзину
+                            </button>
+                            <button class="btn btn-secondary" onclick="removeFromFavorites('${book.id}')">
+                                <i class="fas fa-trash"></i> Удалить
+                            </button>
+                        </div>
+                    </div>
+                `;
+                favoritesContainer.appendChild(bookElement);
+            });
+        }
+    }
+
+    // Функция удаления книги из избранного
+    function removeFromFavorites(bookId) {
+        const book = favorites.getItems().find(b => b.id === bookId);
+        if (book) {
+            favorites.removeItem(bookId);
+            renderFavorites();
+            
+            // Показываем уведомление
+            showNotification(`Книга "${book.title}" удалена из избранного`);
+        }
+    }
+
+    // Функция добавления в корзину из избранного
+    function addToCartFromFavorites(bookId) {
+        const book = favorites.getItems().find(b => b.id === bookId);
+        if (book) {
+            cart.addItem(book);
+            
+            // Показываем уведомление
+            showNotification(`Книга "${book.title}" добавлена в корзину`);
+        }
+    }
+
+    // Функция показа уведомления
+    function showNotification(message) {
+        // Создаем элемент уведомления
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #543E27;
+            color: #F8F4ED;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(84, 62, 39, 0.3);
+            z-index: 1000;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+            font-family: 'Arsenal', sans-serif;
+            border: 1px solid #43321F;
+        `;
+        notification.innerHTML = `
+            <i class="fas fa-check-circle" style="color: #D9C7A7;"></i>
+            <span>${message}</span>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        // Анимация появления
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 10);
+        
+        // Автоматическое скрытие через 3 секунды
+        setTimeout(() => {
+            notification.style.transform = 'translateX(150%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    // Обработчик кнопки "Перейти в каталог"
+    browseBtn.addEventListener('click', function() {
+        window.location.href = 'Katalog.html';
+    });
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        renderFavorites();
+        
+        // Анимация появления элементов
+        const items = document.querySelectorAll('.favorite-item');
+        items.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
+        
+        // Анимация для цитаты
+        const quoteSection = document.querySelector('.quote-section');
+        if (quoteSection) {
+            quoteSection.style.opacity = '0';
+            quoteSection.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                quoteSection.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                quoteSection.style.opacity = '1';
+                quoteSection.style.transform = 'translateY(0)';
+            }, 300);
+        }
+        
+        // Обновляем счетчик избранного в сайдбаре
+        const favoritesCount = favorites.getCount();
+        const favoritesIcon = document.querySelector('.sidebar-icon.active');
+        if (favoritesIcon && favoritesCount > 0) {
+            const heartIcon = favoritesIcon.querySelector('i.fa-heart');
+            if (heartIcon) {
+                heartIcon.parentElement.innerHTML = `❤️ (${favoritesCount})`;
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

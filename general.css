@@ -1,0 +1,292 @@
+
+/* Общие мобильные стили для всех страниц */
+@media (max-width: 768px) {
+    /* Общие стили для body и структуры */
+    body {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    .main {
+        flex-direction: column;
+    }
+    
+    .wrapper {
+        width: 100% !important;
+        padding: 0 15px;
+        max-width: 100% !important;
+    }
+    
+    /* Сайдбар становится горизонтальным в мобильной версии */
+    .sidebar {
+        width: 100% !important;
+        height: auto !important;
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        z-index: 1000;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .sidebar-icon {
+        padding: 10px;
+        flex-direction: column;
+        align-items: center;
+        font-size: 20px;
+    }
+    
+    .sidebar-vertical-text {
+        display: none;
+    }
+    
+    .sidebar-tooltip {
+        display: none;
+    }
+    
+    /* Шапка для мобильных устройств */
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .header_page {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px 0;
+    }
+    
+    .inscription {
+        margin-top: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .inscription a {
+        margin: 5px 10px;
+        font-size: 14px;
+    }
+    
+    .logo img {
+        max-height: 40px;
+    }
+    
+    /* Основной контент с отступом для сайдбара */
+    .content {
+        padding: 20px 15px !important;
+        margin-bottom: 70px; /* Для сайдбара внизу */
+        margin-top: 20px;
+        max-width: 100% !important;
+    }
+    
+    h1 {
+        font-size: 32px !important;
+        margin-bottom: 20px !important;
+    }
+    
+    h2 {
+        font-size: 24px !important;
+    }
+    
+    /* Футер для мобильных */
+    .footer_page {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 0;
+    }
+    
+    .footer_page > div {
+        margin-bottom: 20px;
+    }
+    
+    .links {
+        order: 2;
+    }
+    
+    .contacts {
+        order: 3;
+    }
+    
+    .inscription1 {
+        order: 1;
+    }
+    
+    .icons {
+        justify-content: center;
+        margin-top: 10px;
+    }
+    
+    /* Специфичные стили для страницы delivery.html */
+    .payment-methods {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .payment-card {
+        width: 100%;
+    }
+    
+    .payment-image {
+        height: 120px;
+    }
+    
+    .order-button {
+        max-width: 100%;
+        padding: 15px;
+        font-size: 20px;
+    }
+    
+    /* Специфичные стили для страницы contacts.html */
+    .addresses-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px;
+    }
+    
+    .social-list, .social-list1, .social-list2 {
+        flex-direction: column;
+    }
+    
+    .social-item {
+        margin-bottom: 15px;
+    }
+    
+    .map {
+        width: 100%;
+        height: auto;
+    }
+    
+    /* Специфичные стили для страницы index.html */
+    .books-grid, .reviews-grid, .advantages-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+    
+    .quote {
+        font-size: 18px;
+        padding: 15px;
+        margin: 20px 0;
+    }
+    
+    .bookshelf-logo {
+        font-size: 20px;
+        margin: 20px 0;
+    }
+    
+    .slider1 .slide img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    /* Специфичные стили для страницы basket.html */
+    .book-item {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px 0;
+    }
+    
+    .book-image {
+        margin-right: 0;
+        margin-bottom: 15px;
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+    }
+    
+    .book-price {
+        margin-top: 10px;
+        font-size: 20px;
+    }
+    
+    .remove-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    
+    .buy-button {
+        max-width: 100%;
+    }
+    
+    /* Специфичные стили для страницы Katalog.html */
+    .books-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .book-image {
+        height: 200px;
+    }
+    
+    .book-actions {
+        flex-direction: column;
+    }
+    
+    .add-to-cart, .add-to-favorites {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    
+    /* Панель фильтров для мобильных */
+    .filter-panel {
+        width: 100%;
+        right: -100%;
+    }
+    
+    .filter-panel.active {
+        right: 0;
+    }
+    
+    /* Улучшаем читаемость текста */
+    p, .delivery-address, .order-summary, .book-author, .book-title {
+        font-size: 16px !important;
+        line-height: 1.5;
+    }
+    
+    .section {
+        margin-bottom: 25px;
+    }
+    
+    .section-title {
+        font-size: 20px !important;
+    }
+    
+    /* Кнопки */
+    button, .order-button, .buy-button, .add-to-cart {
+        font-size: 18px !important;
+        padding: 14px !important;
+    }
+}
+
+/* Дополнительные стили для очень маленьких экранов */
+@media (max-width: 480px) {
+    .content {
+        padding: 15px 10px !important;
+    }
+    
+    h1 {
+        font-size: 28px !important;
+    }
+    
+    h2 {
+        font-size: 20px !important;
+    }
+    
+    .inscription a {
+        font-size: 12px;
+        margin: 3px 5px;
+    }
+    
+    .sidebar-icon {
+        font-size: 18px;
+        padding: 8px;
+    }
+    
+    .book-image {
+        height: 180px;
+    }
+}

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="styles.css">
+  <title>О нас — BookShelf</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fdfdfd;
+      color: #2c2c2c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+
+    /* === Верхние две фото (ПО ЦЕНТРУ) === */
+    .hero-images {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .hero-img {
+      height: 400px;
+      width: 280px;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* === Приветствие === */
+    .welcome {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .welcome h1 {
+      font-size: 2.4em;
+      color: #5d3a2a;
+      margin-bottom: 15px;
+    }
+
+    .welcome p {
+      font-size: 1.1em;
+      color: #444;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* === Почему выбирают нас? (2x2 СЕТКА) === */
+    .why-us {
+      margin-bottom: 60px;
+    }
+
+    .why-us h2 {
+      text-align: center;
+      font-size: 2.2em;
+      color: #5d3a2a;
+      margin-bottom: 30px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-img {
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card h3 {
+      font-size: 1.4em;
+      color: #5d3a2a;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 0.95em;
+      color: #555;
+    }
+
+    /* === Акции и мероприятия === */
+    .events {
+      margin-bottom: 60px;
+    }
+
+    .events h2 {
+      text-align: center;
+      font-size: 2.2em;
+      color: #5d3a2a;
+      margin-bottom: 30px;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .event-item {
+      height: 220px;
+      cursor: pointer;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .event-item:hover {
+      transform: scale(1.02);
+    }
+
+    .event-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* === Впечатления посетителей (НОВЫЙ СТИЛЬ) === */
+    .testimonials {
+      margin: 80px 0;
+    }
+
+    .testimonials h2 {
+      text-align: center;
+      font-size: 2.4em;
+      color: #5d3a2a;
+      margin-bottom: 50px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    }
+
+    .testimonial-header {
+      padding: 25px 25px 15px;
+      background: linear-gradient(135deg, #f9f5f0 0%, #f0e8dd 100%);
+      border-bottom: 1px solid #e8e0d5;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .author-avatar {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid white;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .author-info h3 {
+      font-size: 1.3em;
+      color: #5d3a2a;
+      margin-bottom: 5px;
+    }
+
+    .author-info p {
+      color: #7a5c48;
+      font-size: 0.9em;
+      opacity: 0.8;
+    }
+
+    .testimonial-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 5px;
+    }
+
+    .stars {
+      color: #ffc107;
+      font-size: 1.1em;
+      letter-spacing: 2px;
+    }
+
+    .testimonial-content {
+      padding: 25px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .testimonial-text {
+      font-size: 1.05em;
+      line-height: 1.7;
+      color: #444;
+      margin-bottom: 20px;
+      font-style: italic;
+      position: relative;
+      padding-left: 20px;
+    }
+
+    .testimonial-text::before {
+      content: "“";
+      font-size: 4em;
+      color: #e8e0d5;
+      position: absolute;
+      left: -15px;
+      top: -20px;
+      font-family: Georgia, serif;
+      opacity: 0.5;
+    }
+
+    .testimonial-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 15px;
+      border-top: 1px dashed #e8e0d5;
+    }
+
+    .testimonial-date {
+      color: #7a5c48;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .testimonial-tag {
+      background: #e8e0d5;
+      color: #5d3a2a;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 500;
+    }
+
+    /* === Галерея (модальное окно) === */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 80vh;
+    }
+
+    .modal-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .close-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .prev-btn {
+      left: 20px;
+    }
+
+    .next-btn {
+      right: 20px;
+    }
+
+    /* Адаптивность */
+    @media (max-width: 1024px) {
+      .testimonials-grid {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+      }
+
+      .events-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-images {
+        gap: 20px;
+      }
+
+      .hero-img {
+        height: 350px;
+        width: 240px;
+      }
+
+      .testimonial-card {
+        min-height: 250px;
+      }
+
+      .testimonial-header {
+        padding: 20px 20px 12px;
+      }
+
+      .testimonial-content {
+        padding: 20px;
+      }
+
+      .author-avatar {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-img {
+        height: 300px;
+        width: 200px;
+      }
+
+      .hero-images {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .testimonial-author {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .author-avatar {
+        width: 50px;
+        height: 50px;
+      }
+
+      .testimonial-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrapper">
+      <div class="header_page">
+        <div class="logo">
+          <img src="498813b038f4b6467c7a6b2e3abcd01dd18cbf85.png" alt="Логотип BookShelf">
+        </div>
+        <div class="inscription">
+          <a href="index.html">Главная</a>
+          <a href="aboutus.html">О нас</a>
+          <a href="choosen.html">Избранное</a>
+          <a href="basket.html">Корзина</a>
+        </div>
+        <div class="logo">
+          <img src="3eb7947bd732428f473cee7622d68b0f346158ff.png" alt="Иконка пользователя">
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="sidebar">
+            <div class="sidebar-icon" title="Главная">
+                <a href="index.html" style="color: inherit; text-decoration: none;">🏠</a>
+                <span class="sidebar-tooltip">Главная</span>
+            </div>
+            <div class="sidebar-icon active" title="Каталог">
+                <a href="Katalog.html" style="color: inherit; text-decoration: none;">📚</a>
+                <span class="sidebar-tooltip">Каталог</span>
+            </div>
+            <div class="sidebar-icon" title="Избранное">
+                <a href="choosen.html" style="color: inherit; text-decoration: none;" id="favoritesIndicator">❤️</a>
+                <span class="sidebar-tooltip">Избранное</span>
+            </div>
+            <div class="sidebar-icon" title="Корзина">
+                <a href="basket.html" style="color: inherit; text-decoration: none;" id="cartIndicator">🛒</a>
+                <span class="sidebar-tooltip">Корзина</span>
+            </div>
+            <div class="sidebar-vertical-text">
+                BOOKSHELF
+            </div>
+        </div>
+  <div class="container">
+    <h1>О нас</h1>
+
+    <!-- Две большие фото (ПО ЦЕНТРУ) -->
+    <div class="hero-images">
+      <div class="hero-img">
+        <img src="Glpic1.png" alt="Читатели">
+      </div>
+      <div class="hero-img">
+        <img src="Glpic2.png" alt="Полки">
+      </div>
+    </div>
+
+    <!-- Приветствие -->
+    <div class="welcome">
+      <h1>Где книги — там и дом.</h1>
+      <p>Добро пожаловать на BookShelf, место, где каждая книга становится частью вашей истории. Здесь вы найдёте не
+        просто издания — а вдохновение, уют и бесконечные возможности для открытий.</p><br>
+      <img src="Icon hand.png" height="80" width="80">
+    </div>
+
+    <!-- Почему выбирают нас? (2x2 СЕТКА) -->
+    <section class="why-us">
+      <h2>Почему выбирают нас?</h2>
+      <div class="cards-grid">
+        <!-- Первый ряд (2 блока) -->
+        <div class="card">
+          <div class="card-img" style="background-image: url('preim1.png');"></div>
+          <div class="card-content">
+            <h3>Быстрая доставка</h3>
+            <p>Заказы отправляем в течение 24 часов. По всей России — с заботой о каждой книге.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img" style="background-image: url('preim2.png');"></div>
+          <div class="card-content">
+            <h3>Персональные подборки</h3>
+            <p>Наши менеджеры подберут книги под ваши вкусы — как подарок, так и для себя.</p>
+          </div>
+        </div>
+
+        <!-- Второй ряд (2 блока) -->
+        <div class="card">
+          <div class="card-img" style="background-image: url('preim3.png');"></div>
+          <div class="card-content">
+            <h3>Экологичный подход</h3>
+            <p>Упаковка из переработанного картона и деревянные стеллажи — мы заботимся о планете.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img" style="background-image: url('preim4.png');"></div>
+          <div class="card-content">
+            <h3>Любовь к книгам</h3>
+            <p>Мы сами читаем, обсуждаем и рекомендуем — потому что книга — это не товар, а друг.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Акции и мероприятия -->
+    <section class="events">
+      <h2>Акции и мероприятия в BookShelf</h2>
+      <div class="events-grid">
+        <div class="event-item" data-index="0"><img src="G1.png" alt=""></div>
+        <div class="event-item" data-index="1"><img src="G2.png" alt=""></div>
+        <div class="event-item" data-index="2"><img src="G3.png" alt=""></div>
+        <div class="event-item" data-index="3"><img src="G4.png" alt=""></div>
+        <div class="event-item" data-index="4"><img src="G5.png" alt=""></div>
+        <div class="event-item" data-index="5"><img src="G6.png" alt=""></div>
+        <div class="event-item" data-index="6"><img src="G8.png" alt=""></div>
+        <div class="event-item" data-index="7"><img src="G7.png" alt=""></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Впечатления посетителей (НОВЫЙ СТИЛЬ) -->
+  <section class="testimonials">
+    <div class="container">
+      <h2>Что говорят о нас читатели</h2>
+
+      <div class="testimonials-grid">
+
+        <!-- Карточка 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-author">
+              <img src="Anna.jpg" alt="Анна" class="author-avatar">
+              <div class="author-info">
+                <h3>Анна, 24 года</h3>
+                <p>Постоянный читатель</p>
+                <div class="testimonial-rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">
+              Впервые пришла на вечер с поэтом — и осталась на три часа. Здесь не просто читают, а чувствуют слова.
+              Теперь каждый четверг — мой день в BookShelf.
+            </p>
+            <div class="testimonial-footer">
+              <span class="testimonial-date">📚 Читательский клуб, март 2025</span>
+              <span class="testimonial-tag">Клуб любителей поэзии</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-author">
+              <img src="Oleg.jpg" alt="Олег" class="author-avatar">
+              <div class="author-info">
+                <h3>Олег</h3>
+                <p>Участник мастер-классов</p>
+                <div class="testimonial-rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">
+              Раньше вечера проходили за мультиками. Теперь мы вместе выбираем книги, читаем вслух и смеёмся над
+              приключениями героев. BookShelf подарил нам не просто чтение — а новые семейные традиции. Бесценно!
+            </p>
+            <div class="testimonial-footer">
+              <span class="testimonial-date">📚 Мастер-класс «Книга — друг ребёнка»</span>
+              <span class="testimonial-tag">Семейные мероприятия</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-author">
+              <img src="Dima.jpg" alt="Дмитрий" class="author-avatar">
+              <div class="author-info">
+                <h3>Дмитрий, 28 лет</h3>
+                <p>Участник авторских вечеров</p>
+                <div class="testimonial-rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">
+              Пришёл за одной книгой — ушёл с пятью и новым кругом друзей. Здесь книги — не товар, а повод для диалога и
+              настоящего общения.
+            </p>
+            <div class="testimonial-footer">
+              <span class="testimonial-date">🌟 Авторский вечер, февраль 2025</span>
+              <span class="testimonial-tag">Литературные встречи</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 4 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-author">
+              <img src="Elena.jpg" alt="Елена" class="author-avatar">
+              <div class="author-info">
+                <h3>Елена, библиотекарь</h3>
+                <p>Профессиональный читатель</p>
+                <div class="testimonial-rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">
+              Я не покупаю книги — я забираю их домой, чтобы они жили рядом со мной. BookShelf помог мне понять: чтение
+              — это не занятие, а образ жизни.
+            </p>
+            <div class="testimonial-footer">
+              <span class="testimonial-date">📖 Встреча книголюбов, апрель 2025</span>
+              <span class="testimonial-tag">Профессиональное сообщество</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 5 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-author">
+              <img src="Tanya.jpg" alt="Татьяна" class="author-avatar">
+              <div class="author-info">
+                <h3>Татьяна, 61 год</h3>
+                <p>Постоянный участник мероприятий</p>
+                <div class="testimonial-rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">
+              Мне 61, но когда я вижу, как молодые люди обсуждают здесь Достоевского, листают редкие издания или просто
+              сидят с книгой в углу — я понимаю: чтение не ушло. Оно просто стало другим.
+            </p>
+            <div class="testimonial-footer">
+              <span class="testimonial-date">📚 Встреча «Книги, которые ждали нас»</span>
+              <span class="testimonial-tag">Историческая литература</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Карточка 6 -->
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="testimonial-author">
+              <img src="Mary.jpg" alt="Мария" class="author-avatar">
+              <div class="author-info">
+                <h3>Мария, 29 лет</h3>
+                <p>Участница творческих встреч</p>
+                <div class="testimonial-rating">
+                  <span class="stars">★★★★★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-content">
+            <p class="testimonial-text">
+              Участники писали стихи, рисовали обложки и делились своими историями. Каждый ушёл с новой идеей — и
+              книгой, которую сам создал. Невероятный опыт!
+            </p>
+            <div class="testimonial-footer">
+              <span class="testimonial-date">🎨 Творческая встреча, май 2025</span>
+              <span class="testimonial-tag">Творческие мастерские</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <footer>
+        <div class="wrapper">
+            <div class="footer_page">
+                <div class="inscription1">
+                    <p>𝐸𝓋𝑒𝓇𝓎 𝒷𝑜𝑜𝓀 𝒻𝒾𝓃𝒹𝓈 𝒾𝓉𝓈 𝓈𝒽𝑒𝓁𝒻 𝒽𝑒𝓇𝑒.</p>
+                </div>
+                <div class="links">
+                    <a class="big_words" href="Katalog.html">Каталог</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="delivery.html">Доставка</a>
+                    <div class="other">© 2026 Библиотека. Все права защищены</div>
+                </div>
+                <div class="contacts">
+                    <a href="Contacts.html">Контакты</a>
+                    <div class="icons">
+                        <img src="1c0ffca3f9a49ea472972b706c675462d8a2f727.png" alt="Соцсеть 1">
+                        <img src="cff2f600ccb452e853b86f7b3537f97ca4519747.png" alt="Соцсеть 2">
+                        <img src="95f772b910eb8c8c4d1690e8cf834b3c86f8c6dc.png" alt="Соцсеть 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+  <!-- Модальное окно -->
+  <div class="modal" id="galleryModal">
+    <button class="close-btn" id="closeModal">&times;</button>
+    <button class="nav-btn prev-btn" id="prevBtn">&lt;</button>
+    <div class="modal-content">
+      <img class="modal-img" id="modalImg" alt="Фото мероприятия">
+    </div>
+    <button class="nav-btn next-btn" id="nextBtn">&gt;</button>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const eventItems = document.querySelectorAll('.event-item');
+      const modal = document.getElementById('galleryModal');
+      const modalImg = document.getElementById('modalImg');
+      const closeModal = document.getElementById('closeModal');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      let currentIndex = 0;
+
+      eventItems.forEach((item, i) => {
+        item.addEventListener('click', () => {
+          currentIndex = i;
+          modalImg.src = item.querySelector('img').src;
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      closeModal.addEventListener('click', () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + eventItems.length) % eventItems.length;
+        modalImg.src = eventItems[currentIndex].querySelector('img').src;
+      });
+
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % eventItems.length;
+        modalImg.src = eventItems[currentIndex].querySelector('img').src;
+      });
+
+      // Клавиши
+      document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        if (e.key === 'Escape') closeModal.click();
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+      });
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,39 @@
+hr {
+    color: #D9BFA0;
+     margin: 20px 0; border: 0; border-top: 1px solid #D9BFA0; height: 0; -webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box;
+}
+.contacts-section h1 {
+    text-align: center;
+}
+.social-list {
+    display: flex;
+    gap: 100px;
+}
+.social-item {
+    display: flex;
+    align-items: center;
+}
+.social-item .img {
+    max-width: 155px;
+    min-height: 155px;
+}
+.phone-section {
+    text-align: center;
+}
+.address-card {
+    display: flex;
+    padding: 15px 0;
+
+}
+.addresses-grid {
+    flex-direction: column;
+    column-gap: 25px;
+}
+.phone-section h2::before {
+    display: none;
+}
+.map {
+     max-height: 500px; /* Ограничиваем максимальную высоту */
+    display: flex;
+    justify-content: center;
+}

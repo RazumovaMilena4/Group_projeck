@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Arsenal:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="general.css">
+    <title>BookShelf - Книжный магазин</title>
+    <style>
+       * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+            body {
+        background-color: #f9f5e9;
+        color: #4e342e;
+        min-height: 100vh;
+        display: flex;
+    }
+    
+    .sidebar {
+        width: 80px;
+        background-color: #43321F;
+        height: 100vh;
+    }
+    
+    .content {
+        flex: 1;
+        padding: 40px 60px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    h1 {
+        text-align: center;
+        font-size: 48px;
+        margin-bottom: 30px;
+        color: #4e342e;
+        font-weight: normal;
+    }
+    
+    .section {
+        margin-bottom: 35px;
+    }
+    
+    .section-title {
+        font-size: 24px;
+        margin-bottom: 15px;
+        font-weight: normal;
+    }
+    
+    .delivery-address {
+        line-height: 1.6;
+        font-size: 18px;
+        max-width: 600px;
+    }
+    
+    .payment-methods {
+        display: flex;
+        gap: 25px;
+        margin-top: 20px;
+    }
+    
+    .payment-card {
+        flex: 1;
+        border: 1px solid #e8e0d5;
+        border-radius: 4px;
+        overflow: hidden;
+        text-align: center;
+    }
+    
+    .payment-image {
+        width: 100%;
+        height: 160px;
+        object-fit: cover;
+    }
+    
+    .payment-label {
+        padding: 15px;
+        font-size: 20px;
+        background-color: #fff;
+        border-top: 1px solid #e8e0d5;
+    }
+    
+    .order-summary {
+        line-height: 1.6;
+        font-size: 18px;
+        max-width: 600px;
+    }
+    
+    .order-item {
+        margin: 10px 0;
+    }
+    
+    .total {
+        font-size: 24px;
+        margin: 25px 0 30px;
+        font-weight: bold;
+    }
+    
+    .order-button {
+        display: block;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+        padding: 18px;
+        background-color: #5d4037;
+        color: #fff;
+        text-align: center;
+        font-size: 24px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: normal;
+        transition: background-color 0.3s;
+    }
+    
+    .order-button:hover {
+        background-color: #4e342e;
+    }
+</style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrapper">
+            <div class="header_page">
+                <div class="logo">
+                    <img src="498813b038f4b6467c7a6b2e3abcd01dd18cbf85.png" alt="Логотип BookShelf">
+                </div>
+                <div class="inscription">
+                    <a href="index.html">Главная</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="choosen.html">Избранное</a>
+                    <a href="basket.html">Корзина</a>
+                </div>
+                <div class="logo">
+                    <img src="3eb7947bd732428f473cee7622d68b0f346158ff.png" alt="Иконка пользователя">
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="main">
+        <!-- Узкий сайдбар как в макете -->
+         <div class="sidebar">
+            <div class="sidebar-icon" title="Главная">
+                <a href="index.html" style="color: inherit; text-decoration: none;">🏠</a>
+                <span class="sidebar-tooltip">Главная</span>
+            </div>
+            <div class="sidebar-icon active" title="Каталог">
+                <a href="Katalog.html" style="color: inherit; text-decoration: none;">📚</a>
+                <span class="sidebar-tooltip">Каталог</span>
+            </div>
+            <div class="sidebar-icon" title="Избранное">
+                <a href="choosen.html" style="color: inherit; text-decoration: none;">❤️</a>
+                <span class="sidebar-tooltip">Избранное</span>
+            </div>
+            <div class="sidebar-icon" title="Корзина">
+                <a href="basket.html" style="color: inherit; text-decoration: none;">🛒</a>
+                <span class="sidebar-tooltip">Корзина</span>
+            </div>
+            <div class="sidebar-vertical-text">
+                BOOKSHELF
+            </div>
+        </div>
+            <div class = "wrapper">
+                <div class="content">
+                    <h1>Доставка</h1>
+                        <div class="section">
+                        <div class="section-title">Адрес доставки:</div>
+                        <div class="delivery-address">
+                            г. Санкт-Петербург, Невский район, улица Александра Невского, дом 87,<br>
+                            корпус 2, квартира 114
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Способ оплаты:</div>
+                        <div class="payment-methods">
+                            <div class="payment-card">
+                                <img src="солидбанк_внутрь_1200x800.png"
+                                    alt="Банковская карта" 
+                                    class="payment-image">
+                                <div class="payment-label">Банковская карта</div>
+                            </div>
+                            <div class="payment-card">
+                                <img src="3-22.jpg"
+                                    alt="Наличные" 
+                                    class="payment-image">
+                                <div class="payment-label">Наличные</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-title">Состав заказа:</div>
+                        <div class="order-summary">
+                            <div class="order-item">Воскресенье без Бога Том 2 — Ириэ Кимихито</div>
+                            <div class="order-item">Ёжик в тумане — Сергей Козлов</div>
+                            <div class="order-item">Её скрытый гений — Мари Бенедикт</div>
+                            <div class="order-item">Мара и Морок. 500 лет назад — Лия Арден</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="total">К оплате: 3556 р</div>
+                    </div>
+                    
+                    <button class="order-button">Оформить заказ</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="wrapper">
+            <div class="footer_page">
+                <div class="inscription1">
+                    <p>𝐸𝓋𝑒𝓇𝓎 𝒷𝑜𝑜𝓀 𝒻𝒾𝓃𝒹𝓈 𝒾𝓉𝓈 𝓈𝒽𝑒𝓁𝒻 𝒽𝑒𝓇𝑒.</p>
+                </div>
+                <div class="links">
+                    <a class="big_words" href="Katalog.html">Каталог</a>
+                    <a href="aboutus.html">О нас</a>
+                    <a href="delivery.html">Доставка</a>
+                    <div class="other">© 2026 Библиотека. Все права защищены</div>
+                </div>
+                <div class="contacts">
+                    <a href="Contacts.html">Контакты</a>
+                    <div class="icons">
+                        <img src="1c0ffca3f9a49ea472972b706c675462d8a2f727.png" alt="Соцсеть 1">
+                        <img src="cff2f600ccb452e853b86f7b3537f97ca4519747.png" alt="Соцсеть 2">
+                        <img src="95f772b910eb8c8c4d1690e8cf834b3c86f8c6dc.png" alt="Соцсеть 3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>

@@ -1,0 +1,692 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Arsenal", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #000000;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #43321F;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+header a {
+    font-family: "Arsenal", Arial, sans-serif;
+    color: #FFFBF2;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 100%;
+}
+
+.wrapper {
+    width: 100%;
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+.header_page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    height: 80px;
+}
+
+.inscription {
+    display: flex;
+    justify-content: space-between;
+    gap: 100px;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+    position: relative;
+    margin-top: 0;
+}
+
+/* Сайдбар как в макете - простая коричневая полоса */
+.sidebar {
+    width: 60px;
+    background-color: #43321F;
+    position: fixed;
+    left: 0;
+    top: 80px;
+    bottom: 0;
+    z-index: 150;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    overflow: hidden;
+}
+
+/* Иконки/символы в сайдбаре */
+.sidebar-icon {
+    color: #FFFBF2;
+    font-size: 24px;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.sidebar-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+.sidebar-icon.active {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Текст при наведении */
+.sidebar-tooltip {
+    position: absolute;
+    left: 65px;
+    background-color: #5d4037;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+.sidebar-icon:hover .sidebar-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Вертикальный текст в сайдбаре */
+.sidebar-vertical-text {
+    color: #FFFBF2;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-top: 40px;
+    opacity: 0.7;
+}
+
+/* Стили для контента */
+.content {
+    flex: 1;
+    padding: 0 70px; /* Добавлены отступы по бокам */
+    margin-left: 60px;
+    width: calc(100% - 60px);
+    min-height: calc(100vh - 80px - 200px);
+    background-color: #f9f5f0;
+}
+
+.header-placeholder {
+    width: 100%;
+    min-height: 500px;
+    background-color: #e6dfd3;
+    margin: 40px;
+    border-radius: 8px;
+}
+
+h2 {
+    font-size: 28px;
+    margin: 40px 0 25px 0;
+    color: #43321F;
+    font-weight: 700;
+    position: relative;
+    padding-left: 15px;
+}
+
+h2:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    bottom: 5px;
+    width: 4px;
+    background-color: #5d4037;
+    border-radius: 2px;
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px; /* Уменьшен gap для компактности */
+    margin-bottom: 40px; /* Уменьшен отступ между блоками */
+}
+
+.book-card {
+    text-align: center;
+    background-color: white;
+    padding: 15px; /* Уменьшен padding */
+    border-radius: 8px; /* Более скругленные углы */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Более легкая тень */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.book-image {
+    width: 100%;
+    height: 180px; /* Немного меньше высота */
+    background-color: #e6dfd3;
+    margin-bottom: 12px;
+    border-radius: 6px;
+}
+
+.book-title {
+    font-size: 15px; /* Немного меньше шрифт */
+    font-weight: 500; /* Более легкий вес */
+    margin-bottom: 10px;
+    color: #43321F;
+    line-height: 1.3;
+}
+
+.book-tag {
+    display: inline-block;
+    background-color: #5d4037;
+    color: white;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 15px; /* Более овальная форма */
+    margin-top: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.book-tag:hover {
+    background-color: #6d5140;
+    transform: scale(1.05);
+}
+
+.quote {
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    margin: 40px 0;
+    color: #43321F;
+    text-align: center;
+    padding: 25px;
+    background-color: #f1ebe2;
+    border-radius: 8px;
+    border-left: 4px solid #5d4037;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Блок отзывов */
+/* Блок отзывов */
+.reviews-section {
+    margin: 50px -70px; /* Отрицательные отступы для расширения на всю ширину */
+    background-color: #543E27; /* Добавлен фон */
+    padding: 40px 70px; /* Вернуть отступы по бокам */
+    border-radius: 0; /* Убрали скругления */
+}
+
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.review-card {
+    background-color: white;
+    padding: 25px; /* Увеличили padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Усилили тень */
+    border: none; /* Убрали border */
+    transition: transform 0.3s ease;
+}
+
+.review-card:hover {
+    transform: translateY(-5px);
+}
+
+.review-text {
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: #555;
+    font-size: 16px; /* Увеличили шрифт */
+    text-align: center;
+}
+
+.review-author {
+    font-weight: 600;
+    color: #5d4037;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    font-size: 15px;
+}
+
+/* Для заголовка внутри секции отзывов */
+.reviews-section h2 {
+    color: #FFFBF2; /* Белый цвет для заголовка */
+    margin-top: 0; /* Убрали верхний отступ */
+    padding-left: 15px; /* Убрали отступ слева */
+}
+
+.reviews-section h2:before {
+    background-color: #FFFBF2; /* Белая полоска для заголовка */
+}
+.advantages-section {
+    margin: 50px 0;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.advantage-card {
+    text-align: center;
+    padding: 25px 15px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+}
+
+.advantage-icon {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.advantage-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #43321F;
+}
+
+.bookshelf-logo {
+    text-align: center;
+    font-size: 28px;
+    margin: 30px 0;
+    color: #5d4037;
+    letter-spacing: 1px;
+}
+
+footer {
+    color: #FFFBF2;
+    text-decoration: none;
+    font-family: "Arsenal", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    background-color: #43321F;
+    position: relative;
+    z-index: 200;
+    min-height: 200px;
+    margin-top: auto;
+    flex-shrink: 0;
+    margin-left: 60px;
+    width: calc(100% - 60px);
+}
+
+footer a {
+    font-family: "Arsenal", sans-serif;
+    color: #FFFBF2;
+    text-decoration: none;
+    font-size: 25px;
+    font-weight: 400;
+    line-height: 100%;
+}
+
+.footer_page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+}
+
+.links {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+}
+
+.inscription1 {
+    font-size: 30px;
+}
+
+.one_line {
+    display: flex;
+    align-items: flex-start;
+}
+
+.icons {
+    display: flex;
+    gap: 30px;
+}
+
+.other {
+    text-align: center;
+    padding: 25px;
+}
+/* Стили для слайдера */
+.slider1 {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.slide {
+    width: 100%;
+    min-height: 500px;
+}
+
+.slide img {
+    width: 100%;
+    min-height: 500px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Стрелки слайдера */
+.slick-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    transition: background-color 0.3s;
+}
+
+.slick-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.slick-prev {
+    left: 15px;
+}
+
+.slick-next {
+    right: 15px;
+}
+
+.slick-prev:before {
+    content: '←';
+    font-size: 20px;
+    color: #43321F;
+}
+
+.slick-next:before {
+    content: '→';
+    font-size: 20px;
+    color: #43321F;
+}
+
+/* Точки (dots) */
+.slick-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex !important;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.slick-dots li {
+    width: 10px;
+    height: 10px;
+}
+
+.slick-dots button {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.slick-dots .slick-active button {
+    background-color: #FFFBF2;
+}
+/* Стили для изображений книг */
+.book-image {
+    width: 100%;
+    height: 180px;
+    background-color: #e6dfd3;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    overflow: hidden; /* Добавлено */
+    position: relative; /* Добавлено */
+}
+
+.book-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Исправлено */
+    display: block;
+    transition: transform 0.3s ease; /* Добавлено для эффекта */
+}
+
+.book-card:hover .book-image img {
+    transform: scale(1.05); /* Легкое увеличение при наведении */
+}
+
+/* Стили для слайдера */
+.slider1 {
+    width: 100%;
+    height: 500px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.slide {
+    width: 100%;
+    height: 500px; /* Исправлено с min-height на height */
+}
+
+.slide img {
+    width: 100%;
+    height: 100%; /* Исправлено */
+    object-fit: cover;
+    display: block;
+}
+
+/* Стили для изображений в подвале */
+.icons img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.icons img:hover {
+    transform: scale(1.1);
+}
+
+/* Стили для логотипов в хедере */
+.logo img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+/* Увеличиваем высоту контейнера для книг */
+.book-card {
+    text-align: center;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.book-image {
+    width: 100%;
+    height: 220px; /* Увеличиваем высоту для полного отображения */
+    margin-bottom: 12px;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    background-color: transparent; /* Убираем серый фон */
+}
+
+.book-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Меняем с cover на contain для полного отображения */
+    display: block;
+    transition: transform 0.3s ease;
+    background-color: white; /* Белый фон для изображений книг */
+}
+
+/* Для лучшего отображения книг добавляем тень внутри */
+.book-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.book-card:hover .book-image img {
+    transform: scale(1.03);
+}
+
+.book-title {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #43321F;
+    line-height: 1.3;
+    flex-grow: 1; /* Занимает доступное пространство */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-tag {
+    display: inline-block;
+    background-color: #5d4037;
+    color: white;
+    font-size: 13px;
+    padding: 8px 16px;
+    border-radius: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Обновляем сетку для лучшего отображения */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px; /* Увеличиваем отступы */
+    margin-bottom: 40px;
+}
+.review {
+    display: flex;
+    justify-content: space-between;
+}
+/* Добавьте эти стили в ваш файл styles.css */
+
+/* Стили для контейнера отзыва */
+.review {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* Стили для изображений в отзывах - круглые аватары */
+.review img {
+    width: 60px; /* Размер кружка */
+    height: 60px;
+    border-radius: 50%; /* Делаем круглым */
+    object-fit: cover; /* Обрезаем изображение для заполнения круга */
+    border: 2px solid #fff; /* Белая рамка */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    margin-bottom: 8px; /* Отступ снизу */
+}
+
+/* Дополнительные стили для улучшения отображения */
+.review-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.review-text {
+    margin-bottom: 15px;
+}
+
+.review-author {
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .review img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .review-author {
+        font-size: 13px;
+    }
+}
